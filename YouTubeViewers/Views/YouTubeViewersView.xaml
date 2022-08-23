@@ -30,6 +30,7 @@
 
             <Button 
                 Grid.Column="1"
+                Command="{Binding AddYouTubeViewerCommand}"
                 Content="Add"
                 FontSize="16"/>
         </Grid>
@@ -40,8 +41,14 @@
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
 
-            <components:YouTubeViewersListing Grid.Column="0"/>
-            <components:YouTubeViewersDetails Grid.Column="1" Margin="20 0 0 0" />
+            <components:YouTubeViewersListing 
+                Grid.Column="0" 
+                DataContext="{Binding YouTubeViewersListingViewModel}"/>
+
+            <components:YouTubeViewersDetails 
+                Grid.Column="1" 
+                DataContext="{Binding YouTubeViewersDetailsViewModel}"
+                Margin="20 0 0 0"/>
         </Grid>
     </Grid>
 </UserControl>
