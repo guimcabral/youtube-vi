@@ -15,10 +15,12 @@ namespace YouTubeViewers
     /// </summary>
     public partial class App : Application
     {
+        private readonly ModalNavigationStore _modalNavigationStore;
         private readonly SelectedYouTubeViewerStore _selectedYouTubeViewerStore;
 
         public App()
         {
+            _modalNavigationStore = new ModalNavigationStore();
             _selectedYouTubeViewerStore = new SelectedYouTubeViewerStore();
         }
 
@@ -26,7 +28,7 @@ namespace YouTubeViewers
         {
             MainWindow = new MainWindow()
             {
-                DataContext = new YouTubeViewersViewModel(_selectedYouTubeViewerStore)
+                DataContext = new MainViewModel(_modalNavigationStore, new YouTubeViewersViewModel(_selectedYouTubeViewerStore))
             };
             MainWindow.Show();
 

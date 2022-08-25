@@ -9,10 +9,8 @@
         Title="MainWindow" Height="450" Width="800"
         FontSize="14">
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-        <StackPanel Margin="25">
-            <views:AddYouTubeViewerView/>
-            <views:EditYouTubeViewerView/>
-            <!--<views:YouTubeViewersView/>-->
-        </StackPanel>
+        <Grid Margin="25">
+            <views:YouTubeViewersView DataContext="{Binding YouTubeViewersViewModel}"/>
+        </Grid>
     </ScrollViewer>
 </Window>
