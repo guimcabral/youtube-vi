@@ -33,7 +33,7 @@
                 <TextBox 
                     Grid.Column="1"
                     Margin="20 0 0 0"
-                    Text="{Binding Username}"/>
+                    Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
 
             <Grid Grid.Row="1" Margin="0 20 0 0">
@@ -75,9 +75,9 @@
 
         <WrapPanel Grid.Row="1" Margin="0 30 0 0">
             <Button 
-                Command="{Binding SubimitCommand}" 
+                Command="{Binding SubmitCommand}" 
                 Content="Submit"
-                IsEnabled="{Binding CansSubmit}"
+                IsEnabled="{Binding CanSubmit}"
                 Margin="0 0 5 0"/>
             
             <Button 

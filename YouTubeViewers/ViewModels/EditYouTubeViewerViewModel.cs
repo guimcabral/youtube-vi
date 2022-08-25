@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using YouTubeViewers.Commands;
+using YouTubeViewers.Models;
+using YouTubeViewers.Stores;
 
 namespace YouTubeViewers.ViewModels
 {
@@ -10,9 +14,15 @@ namespace YouTubeViewers.ViewModels
     {
         public YouTubeViewerDetailsFormViewModel YouTubeViewerDetailsFormViewModel { get; }
 
-        public EditYouTubeViewerViewModel()
+        public EditYouTubeViewerViewModel(YouTubeViewer youTubeViewer, ModalNavigationStore modalNavigationStore)
         {
-            YouTubeViewerDetailsFormViewModel = new YouTubeViewerDetailsFormViewModel();
+            ICommand cancelCommand = new CloseModalCommand(modalNavigationStore);
+            YouTubeViewerDetailsFormViewModel = new YouTubeViewerDetailsFormViewModel(null, cancelCommand)
+            {
+                Username = youTubeViewer.Username,
+                IsSubscribed = youTubeViewer.IsSubscribed,
+                IsMember = youTubeViewer.IsMember,
+            };
         }
     }
 }
