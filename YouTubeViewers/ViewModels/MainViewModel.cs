@@ -10,7 +10,7 @@ namespace YouTubeViewers.ViewModels
     public class MainViewModel : ViewModelBase
     {
         private readonly ModalNavigationStore _modalNavigationStore;
-        public ViewModelBase CurrentViewModel => _modalNavigationStore.CurrentViewModel;
+        public ViewModelBase CurrentModalViewModel => _modalNavigationStore.CurrentViewModel;
         public bool IsModalOpen => _modalNavigationStore.IsOpen;
 
         public YouTubeViewersViewModel YouTubeViewersViewModel { get;  }
@@ -21,6 +21,8 @@ namespace YouTubeViewers.ViewModels
             YouTubeViewersViewModel = youTubeViewersViewModel;
 
             _modalNavigationStore.CurrentViewModelChanged += ModalNavigationStore_CurrentViewModelChanged;
+
+            _modalNavigationStore.CurrentViewModel = new EditYouTubeViewerViewModel();
         }
 
         protected override void Dispose()
@@ -31,7 +33,7 @@ namespace YouTubeViewers.ViewModels
 
         private void ModalNavigationStore_CurrentViewModelChanged()
         {
-            OnPropertyChanged(nameof(CurrentViewModel));
+            OnPropertyChanged(nameof(CurrentModalViewModel));
             OnPropertyChanged(nameof(IsModalOpen));
         }
     }

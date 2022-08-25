@@ -26,9 +26,11 @@ namespace YouTubeViewers
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            YouTubeViewersViewModel youTubeViewersViewModel = new YouTubeViewersViewModel(_selectedYouTubeViewerStore);
+
             MainWindow = new MainWindow()
             {
-                DataContext = new MainViewModel(_modalNavigationStore, new YouTubeViewersViewModel(_selectedYouTubeViewerStore))
+                DataContext = new MainViewModel(_modalNavigationStore, youTubeViewersViewModel)
             };
             MainWindow.Show();
 
