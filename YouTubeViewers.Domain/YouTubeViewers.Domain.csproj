@@ -6,8 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\YouTubeViewers.Domain\YouTubeViewers.Domain.csproj" />
-  </ItemGroup>
-
 </Project>

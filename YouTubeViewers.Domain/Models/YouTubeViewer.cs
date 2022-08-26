@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace YouTubeViewers.Models
+namespace YouTubeViewers.Domain.Models
 {
     public class YouTubeViewer
     {

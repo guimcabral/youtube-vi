@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using YouTubeViewers.Models;
+using YouTubeViewers.Domain.Models;
 using YouTubeViewers.Stores;
 
 namespace YouTubeViewers.ViewModels
