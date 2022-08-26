@@ -9,6 +9,7 @@ namespace YouTubeViewers.Stores
 {
     public class SelectedYouTubeViewerStore
     {
+        private readonly YouTubeViewersStore _youTubeViewersStore;
         private YouTubeViewer _selectedYouTubeViewer;
 
         public YouTubeViewer SelectedYouTubeViewer
@@ -22,5 +23,19 @@ namespace YouTubeViewers.Stores
         }
 
         public event Action SelectedYouTubeViewerChanged;
+
+        public SelectedYouTubeViewerStore(YouTubeViewersStore youTubeViewersStore)
+        {
+            _youTubeViewersStore = youTubeViewersStore;
+            _youTubeViewersStore.YouTubeViewerUpdated += YouTubeViewersStore_YouTubeViewerUpdated;
+        }
+
+        private void YouTubeViewersStore_YouTubeViewerUpdated(YouTubeViewer youTubeViewer)
+        {
+            if(youTubeViewer.Id == SelectedYouTubeViewer?.Id)
+            {
+                SelectedYouTubeViewer = youTubeViewer;
+            }
+        }
     }
 }
