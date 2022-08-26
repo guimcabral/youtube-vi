@@ -22,6 +22,7 @@ namespace YouTubeViewers.Stores
         public event Action YouTubeViewersLodaded;
         public event Action<YouTubeViewer> YouTubeViewerAdded;
         public event Action<YouTubeViewer> YouTubeViewerUpdated;
+        public event Action<Guid> YouTubeViewerDeleted;
 
         public YouTubeViewersStore(IGetAllYouTubeViewersQuery getAllYouTubeViewersQuery,
                                    ICreateYouTubeViewerCommand createYouTubeViewerCommand,
@@ -71,6 +72,15 @@ namespace YouTubeViewers.Stores
             }
 
             YouTubeViewerUpdated?.Invoke(youTubeViewer);
+        }
+
+        public async Task Delete(Guid id)
+        {
+            await _deleteYouTubeViewerCommand.Execute(id);
+
+            _youTubeViewers.RemoveAll(y => y.Id == id);
+
+            YouTubeViewerDeleted?.Invoke(id);
         }
     }
 }

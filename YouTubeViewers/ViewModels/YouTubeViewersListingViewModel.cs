@@ -54,13 +54,15 @@ namespace YouTubeViewers.ViewModels
             _youTubeViewersStore.YouTubeViewersLodaded += YouTubeViewersStore_YouTubeViewersLodaded;
             _youTubeViewersStore.YouTubeViewerAdded += YouTubeViewersStore_YouTubeViewerAdded;
             _youTubeViewersStore.YouTubeViewerUpdated += YouTubeViewersStore_YouTubeViewerUpdated;
+            _youTubeViewersStore.YouTubeViewerDeleted += YouTubeViewersStore_YouTubeViewerDeleted;
         }
+
 
         public static YouTubeViewersListingViewModel LoadViewModel(YouTubeViewersStore youTubeViewersStore,
                                                                    SelectedYouTubeViewerStore selectedYouTubeViewerStore,
                                                                    ModalNavigationStore modalNavigationStore)
         {
-            YouTubeViewersListingViewModel viewModel = 
+            YouTubeViewersListingViewModel viewModel =
                 new YouTubeViewersListingViewModel(youTubeViewersStore, selectedYouTubeViewerStore, modalNavigationStore);
 
             viewModel.LoadYouTubeViewersCommand.Execute(null);
@@ -102,9 +104,20 @@ namespace YouTubeViewers.ViewModels
             AddYouTubeViewer(youTubeViewer);
         }
 
-        private void AddYouTubeViewer(YouTubeViewer youTubeViewer)
+        private void YouTubeViewersStore_YouTubeViewerDeleted(Guid id)
         {
             YouTubeViewersListingItemViewModel itemViewModel = 
+                _youTubeViewersListingItemViewModels.FirstOrDefault(y => y.YouTubeViewer.Id == id);
+
+            if (itemViewModel != null)
+            {
+                _youTubeViewersListingItemViewModels.Remove(itemViewModel);
+            }
+        }
+
+        private void AddYouTubeViewer(YouTubeViewer youTubeViewer)
+        {
+            YouTubeViewersListingItemViewModel itemViewModel =
                 new YouTubeViewersListingItemViewModel(youTubeViewer, _youTubeViewersStore, _modalNavigationStore);
             _youTubeViewersListingItemViewModels.Add(itemViewModel);
         }

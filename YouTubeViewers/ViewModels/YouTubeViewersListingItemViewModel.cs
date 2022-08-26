@@ -24,6 +24,7 @@ namespace YouTubeViewers.ViewModels
         {
             YouTubeViewer = youTubeViewer;
             EditCommand = new OpenEditYouTubeViewerCommand(this, youTubeViewersStore, modalNavigationStore);
+            DeleteCommand = new DeleteYouTubeViewerCommand(this, youTubeViewersStore);
         }
 
         public void Update(YouTubeViewer youTubeViewer)
