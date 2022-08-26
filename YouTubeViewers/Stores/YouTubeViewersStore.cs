@@ -16,6 +16,13 @@ namespace YouTubeViewers.Stores
         private readonly IUpdateYouTubeViewerCommand _updateYouTubeViewerCommand;
         private readonly IDeleteYouTubeViewerCommand _deleteYouTubeViewerCommand;
 
+        private readonly List<YouTubeViewer> _youTubeViewers;
+        public IEnumerable<YouTubeViewer> YouTubeViewers => _youTubeViewers;
+
+        public event Action YouTubeViewersLodaded;
+        public event Action<YouTubeViewer> YouTubeViewerAdded;
+        public event Action<YouTubeViewer> YouTubeViewerUpdated;
+
         public YouTubeViewersStore(IGetAllYouTubeViewersQuery getAllYouTubeViewersQuery,
                                    ICreateYouTubeViewerCommand createYouTubeViewerCommand,
                                    IUpdateYouTubeViewerCommand updateYouTubeViewerCommand,
@@ -25,20 +32,44 @@ namespace YouTubeViewers.Stores
             _createYouTubeViewerCommand = createYouTubeViewerCommand;
             _updateYouTubeViewerCommand = updateYouTubeViewerCommand;
             _deleteYouTubeViewerCommand = deleteYouTubeViewerCommand;
+
+            _youTubeViewers = new List<YouTubeViewer>();
         }
 
-        public event Action<YouTubeViewer> YouTubeViewerAdded;
-        public event Action<YouTubeViewer> YouTubeViewerUpdated;
+        public async Task Load()
+        {
+            IEnumerable<YouTubeViewer> youTubeViewers = await _getAllYouTubeViewersQuery.Execute();
+
+            _youTubeViewers.Clear();
+            _youTubeViewers.AddRange(youTubeViewers);
+
+            YouTubeViewersLodaded?.Invoke();
+        }
 
         public async Task Add(YouTubeViewer youTubeViewer)
         {
             await _createYouTubeViewerCommand.Execute(youTubeViewer);
+
+            _youTubeViewers.Add(youTubeViewer);
+
             YouTubeViewerAdded?.Invoke(youTubeViewer);
         }
 
         public async Task Update(YouTubeViewer youTubeViewer)
         {
             await _updateYouTubeViewerCommand.Execute(youTubeViewer);
+
+            int currentIndex = _youTubeViewers.FindIndex(y => y.Id == youTubeViewer.Id);
+
+            if(currentIndex != -1)
+            {
+                _youTubeViewers[currentIndex] = youTubeViewer;
+            }
+            else
+            {
+                _youTubeViewers.Add(youTubeViewer);
+            }
+
             YouTubeViewerUpdated?.Invoke(youTubeViewer);
         }
     }
