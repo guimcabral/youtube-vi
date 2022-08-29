@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -41,10 +41,10 @@ namespace YouTubeViewers
                     services.AddSingleton<ModalNavigationStore>();
                     services.AddSingleton<YouTubeViewersStore>();
                     services.AddSingleton<SelectedYouTubeViewerStore>();
-                    
+
                     services.AddTransient<YouTubeViewersViewModel>(CreateYouTubeViewersViewModel);
                     services.AddSingleton<MainViewModel>();
-                    
+
                     services.AddSingleton<MainWindow>((services) => new MainWindow()
                     {
                         DataContext = services.GetRequiredService<MainViewModel>()
@@ -57,9 +57,9 @@ namespace YouTubeViewers
         {
             _host.Start();
 
-            YouTubeViewersDbContextFactory _youTubeViewersDbContextFactory = 
+            YouTubeViewersDbContextFactory _youTubeViewersDbContextFactory =
                 _host.Services.GetRequiredService<YouTubeViewersDbContextFactory>();
-            
+
             using (YouTubeViewersDbContext context = _youTubeViewersDbContextFactory.Create())
             {
                 context.Database.Migrate();

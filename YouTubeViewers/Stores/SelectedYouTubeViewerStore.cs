@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,11 +28,17 @@ namespace YouTubeViewers.Stores
         {
             _youTubeViewersStore = youTubeViewersStore;
             _youTubeViewersStore.YouTubeViewerUpdated += YouTubeViewersStore_YouTubeViewerUpdated;
+            _youTubeViewersStore.YouTubeViewerAdded += YouTubeViewersStore_YouTubeViewerAdded;
+        }
+
+        private void YouTubeViewersStore_YouTubeViewerAdded(YouTubeViewer youTubeViewer)
+        {
+            SelectedYouTubeViewer = youTubeViewer;
         }
 
         private void YouTubeViewersStore_YouTubeViewerUpdated(YouTubeViewer youTubeViewer)
         {
-            if(youTubeViewer.Id == SelectedYouTubeViewer?.Id)
+            if (youTubeViewer.Id == SelectedYouTubeViewer?.Id)
             {
                 SelectedYouTubeViewer = youTubeViewer;
             }
