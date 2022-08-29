@@ -21,6 +21,7 @@ namespace YouTubeViewers.Commands
 
         public override async Task ExecuteAsync(object parameter)
         {
+            _youTubeViewersViewModel.ErrorMessage = null;
             _youTubeViewersViewModel.IsLoading = true;
 
             try
@@ -29,7 +30,7 @@ namespace YouTubeViewers.Commands
             }
             catch (Exception)
             {
-                throw;
+                _youTubeViewersViewModel.ErrorMessage = "Failed to load YouTube Viewers. Please restart the application.";
             }
             finally
             {

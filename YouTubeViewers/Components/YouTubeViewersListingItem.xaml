@@ -8,6 +8,11 @@
              xmlns:loadingspinner="clr-namespace:LoadingSpinnerControl;assembly=LoadingSpinnerControl"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </UserControl.Resources>
+    
     <Border Padding="10" TextBlock.FontSize="16">
         <Grid>
             <Grid.ColumnDefinitions>
@@ -15,7 +20,15 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Column="0" Text="{Binding Username}"/>
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="{Binding Username}"/>
+                
+                <TextBlock 
+                    FontSize="10"
+                    Text="{Binding ErrorMessage}" 
+                    Style="{StaticResource ErrorMessage}"
+                    Visibility="{Binding HasErrorMessage, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            </StackPanel>
 
             <Grid Grid.Column="1" Margin="10 0 0 0">
                 <Grid>

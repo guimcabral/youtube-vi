@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:YouTubeViewers.Views" 
              xmlns:components="clr-namespace:YouTubeViewers.Components"
              mc:Ignorable="d" 
+             Width="400"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
