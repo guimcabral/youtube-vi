@@ -46,6 +46,19 @@ namespace YouTubeViewers.ViewModels
             }
         }
 
+        private bool _isSubmitting;
+
+        public bool IsSubmitting
+        {
+            get { return _isSubmitting; }
+            set
+            {
+                _isSubmitting = value;
+                OnPropertyChanged(nameof(IsSubmitting));
+            }
+        }
+
+
         public bool CanSubmit => !string.IsNullOrEmpty(Username);
 
         public ICommand SubmitCommand { get; }

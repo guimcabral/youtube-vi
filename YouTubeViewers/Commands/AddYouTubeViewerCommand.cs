@@ -28,6 +28,8 @@ namespace YouTubeViewers.Commands
         {
             YouTubeViewerDetailsFormViewModel formViewModel = _addYouTubeViewerViewModel.YouTubeViewerDetailsFormViewModel;
 
+            formViewModel.IsSubmitting = true;
+            
             YouTubeViewer youTubeViewer = new YouTubeViewer(Guid.NewGuid(),
                                                             formViewModel.Username,
                                                             formViewModel.IsSubscribed,
@@ -41,6 +43,10 @@ namespace YouTubeViewers.Commands
             catch (Exception)
             {
                 throw;
+            }
+            finally
+            {
+                formViewModel.IsSubmitting = false;
             }
         }
     }

@@ -37,9 +37,6 @@ namespace YouTubeViewers.ViewModels
             }
         }
 
-        public ICommand LoadYouTubeViewersCommand { get; }
-
-
         public YouTubeViewersListingViewModel(YouTubeViewersStore youTubeViewersStore,
                                               SelectedYouTubeViewerStore selectedYouTubeViewerStore,
                                               ModalNavigationStore modalNavigationStore)
@@ -49,25 +46,10 @@ namespace YouTubeViewers.ViewModels
             _modalNavigationStore = modalNavigationStore;
             _youTubeViewersListingItemViewModels = new ObservableCollection<YouTubeViewersListingItemViewModel>();
 
-            LoadYouTubeViewersCommand = new LoadYouTubeViewersCommand(youTubeViewersStore);
-
             _youTubeViewersStore.YouTubeViewersLodaded += YouTubeViewersStore_YouTubeViewersLodaded;
             _youTubeViewersStore.YouTubeViewerAdded += YouTubeViewersStore_YouTubeViewerAdded;
             _youTubeViewersStore.YouTubeViewerUpdated += YouTubeViewersStore_YouTubeViewerUpdated;
             _youTubeViewersStore.YouTubeViewerDeleted += YouTubeViewersStore_YouTubeViewerDeleted;
-        }
-
-
-        public static YouTubeViewersListingViewModel LoadViewModel(YouTubeViewersStore youTubeViewersStore,
-                                                                   SelectedYouTubeViewerStore selectedYouTubeViewerStore,
-                                                                   ModalNavigationStore modalNavigationStore)
-        {
-            YouTubeViewersListingViewModel viewModel =
-                new YouTubeViewersListingViewModel(youTubeViewersStore, selectedYouTubeViewerStore, modalNavigationStore);
-
-            viewModel.LoadYouTubeViewersCommand.Execute(null);
-
-            return viewModel;
         }
 
         protected override void Dispose()

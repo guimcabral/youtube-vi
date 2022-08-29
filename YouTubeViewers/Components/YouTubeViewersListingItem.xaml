@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:YouTubeViewers.Components" 
-             xmlns:custom="clr-namespace:DropdownMenuControl;assembly=DropdownMenuControl"
+             xmlns:custom="clr-namespace:DropdownMenuControl;assembly=DropdownMenuControl" 
+             xmlns:loadingspinner="clr-namespace:LoadingSpinnerControl;assembly=LoadingSpinnerControl"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Border Padding="10" TextBlock.FontSize="16">
@@ -16,71 +17,100 @@
 
             <TextBlock Grid.Column="0" Text="{Binding Username}"/>
 
-            <custom:DropdownMenu 
-                x:Name="dropdown" 
-                Grid.Column="1" 
-                Margin="10 0 0 0">
+            <Grid Grid.Column="1" Margin="10 0 0 0">
+                <Grid>
+                    <Grid.Style>
+                        <Style TargetType="Grid">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsDeleting}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Style>
 
-                <Border 
-                    Background="White" 
-                    BorderBrush="Gray" 
-                    BorderThickness="1">
+                    <loadingspinner:LoadingSpinner 
+                        Thickness="2"
+                        Diameter="20" 
+                        IsLoading="True"/>
+                </Grid>
 
-                    <StackPanel MinWidth="125">
-                        <StackPanel.Resources>
-                            <Style TargetType="Button">
-                                <Setter Property="Background" Value="#f0f0f0"/>
-                                <Setter Property="Foreground" Value="Black"/>
-                                <Setter Property="Padding" Value="20 10"/>
-                                <Setter Property="Cursor"  Value="Hand"/>
+                <Grid>
+                    <Grid.Style>
+                        <Style TargetType="Grid">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsDeleting}" Value="False">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Style>
 
-                                <EventSetter Event="Click" Handler="Button_Click"/>
+                    <custom:DropdownMenu x:Name="dropdown">
+                        <Border 
+                            Background="White" 
+                            BorderBrush="Gray" 
+                            BorderThickness="1">
 
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="Button">
-                                            <Border 
+                            <StackPanel MinWidth="125">
+                                <StackPanel.Resources>
+                                    <Style TargetType="Button">
+                                        <Setter Property="Background" Value="#f0f0f0"/>
+                                        <Setter Property="Foreground" Value="Black"/>
+                                        <Setter Property="Padding" Value="20 10"/>
+                                        <Setter Property="Cursor"  Value="Hand"/>
+
+                                        <EventSetter Event="Click" Handler="Button_Click"/>
+
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border 
                                                 Background="{TemplateBinding Background}" 
                                                 Margin="{TemplateBinding Margin}"
                                                 Padding="{TemplateBinding Padding}">
-                                                <ContentPresenter/>
-                                            </Border>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
+                                                        <ContentPresenter/>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
 
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Trigger.EnterActions>
-                                            <BeginStoryboard>
-                                                <Storyboard>
-                                                    <ColorAnimation 
-                                                        Storyboard.TargetProperty="Background.(SolidColorBrush.Color)"
-                                                        To="#c7c7c7"
-                                                        Duration="0:0:0.1"/>
-                                                </Storyboard>
-                                            </BeginStoryboard>
-                                        </Trigger.EnterActions>
-                                        <Trigger.ExitActions>
-                                            <BeginStoryboard>
-                                                <Storyboard>
-                                                    <ColorAnimation 
-                                                        Storyboard.TargetProperty="Background.(SolidColorBrush.Color)"
-                                                        To="#f0f0f0"
-                                                        Duration="0:0:0.1"/>
-                                                </Storyboard>
-                                            </BeginStoryboard>
-                                        </Trigger.ExitActions>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </StackPanel.Resources>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Trigger.EnterActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <ColorAnimation 
+                                                                Storyboard.TargetProperty="Background.(SolidColorBrush.Color)"
+                                                                To="#c7c7c7"
+                                                                Duration="0:0:0.1"/>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </Trigger.EnterActions>
+                                                <Trigger.ExitActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <ColorAnimation 
+                                                                Storyboard.TargetProperty="Background.(SolidColorBrush.Color)"
+                                                                To="#f0f0f0"
+                                                                Duration="0:0:0.1"/>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </Trigger.ExitActions>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </StackPanel.Resources>
 
-                        <Button Content="Edit" Command="{Binding EditCommand}"/>
-                        <Button Content="Delete" Command="{Binding DeleteCommand}"/>
-                    </StackPanel>
-                </Border>
-            </custom:DropdownMenu>
+                                <Button Content="Edit" Command="{Binding EditCommand}"/>
+                                <Button Command="{Binding DeleteCommand}" Content="Delete"/>
+                            </StackPanel>
+                        </Border>
+                    </custom:DropdownMenu>
+                </Grid>
+            </Grid>
         </Grid>
     </Border>
 </UserControl>
